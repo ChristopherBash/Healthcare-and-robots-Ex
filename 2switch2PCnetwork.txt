@@ -1,0 +1,111 @@
+Router  
+
+enable 
+
+configure terminal  
+
+hostname R1 
+
+interface g0/0/0 
+
+ip address 192.168.0.1 255.255.255.0 
+
+description Connected to F0/6 on S2 
+
+no shutdown 
+
+interface g0/0/1 
+
+ip address 192.168.1.1 255.255.255.0 
+
+description Connected to F0/5 on S1 
+
+no shutdown 
+
+no ip domain-lookup  
+
+enable secret cisco 
+
+line console 0 
+
+password cisco 
+
+login 
+
+line vty 0 4 
+
+password cisco 
+
+login 
+
+banner motd $ Keep your hands off! $ 
+
+service password-encryption 
+
+ 
+
+Switch #1 
+
+enable 
+
+configure terminal  
+
+hostname S1 
+
+no ip domain-lookup  
+
+interface vlan 1 
+
+ip address 192.168.1.4 255.255.255.0 
+
+no shutdown  
+
+ip default-gateway 192.168.1.1 
+
+end 
+
+copy running-config startup-config 
+
+ 
+
+Switch #2 
+
+enable 
+
+configure terminal  
+
+hostname S2 
+
+no ip domain-lookup  
+
+interface vlan 1 
+
+ip address 192.168.0.4 255.255.255.0 
+
+no shutdown  
+
+ip default-gateway 192.168.0.1 
+
+end 
+
+copy running-config startup-config 
+
+ 
+
+Reset Switches 
+
+Switch# delete flash:vlan.dat 
+
+Switch# erase startup-config 
+
+Switch# reload 
+
+ 
+
+ 
+
+Reset Routers 
+
+Router# erase startup-config 
+
+Router# reload 
